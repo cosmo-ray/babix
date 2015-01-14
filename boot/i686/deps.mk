@@ -1,1 +1,1 @@
-SRCS:=	bootloader.s
+SRCS:=	bootloader.S

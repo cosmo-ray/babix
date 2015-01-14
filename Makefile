@@ -18,7 +18,9 @@ clean:
 fclean: clean
 	${MAKE} build clean PDIR=..
 
+
 test:	all
 	qemu -kernel ${BUILDD}/${TARGET}
+
 
 FORCE:

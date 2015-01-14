@@ -5,12 +5,12 @@ SUBDIRS	= ${shell find . -mindepth 1 -maxdepth 1 -not -empty -type d}
 #sub build dir (not used)
 #SUBBDIR	= ${PDIR}/${BUILDD}/$(notdir $(shell pwd))
 
-OBJS = $(subst .s,.o, $(addprefix ${PDIR}/${BUILDD}/, $(SRCS)))
+OBJS = $(subst .S,.o, $(addprefix ${PDIR}/${BUILDD}/, $(SRCS)))
 
 all: ${OBJS}
 
-${PDIR}/${BUILDD}/%.o: %.s
-	$(AS) $(ASFLAGS) $< -o $@
+${PDIR}/${BUILDD}/%.o: %.S Makefile
+	$(AS) $(ASFLAGS) -I ${PDIR}/${INCLUDE} -c $< -o $@
 
 clean:
 	@rm -vf ${OBJS}
