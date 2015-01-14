@@ -3,17 +3,22 @@ include config.mk
 all:	Makefile link
 
 kernel: FORCE
-	make -C $@ PDIR=..
+	${MAKE} $@ PDIR=..
 
 boot:	FORCE
-	make -C $@ PDIR=..
+	${MAKE} $@ PDIR=..
 
 link:	kernel boot  
-	make -C build PDIR=..
+	${MAKE} build PDIR=..
 
+re:	clean all 
 clean:
-	make -C kernel clean PDIR=..
-	make -C boot clean PDIR=..
+	${MAKE} kernel clean PDIR=..
+	${MAKE} boot clean PDIR=..
 fclean: clean
-	make -C build clean PDIR=..
+	${MAKE} build clean PDIR=..
+
+test:	all
+	qemu -kernel ${BUILDD}/${TARGET}
+
 FORCE:

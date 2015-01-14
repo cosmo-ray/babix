@@ -1,9 +1,9 @@
 include ${PDIR}/config.mk
 
 ${ARCH}: FORCE
-	 make -C $@ PDIR=../${PDIR}
+	 ${MAKE} $@ PDIR=../${PDIR}
 FORCE:
 
 clean:
-	make -C ${ARCH} clean PDIR=../${PDIR}
+	${MAKE} ${ARCH} clean PDIR=../${PDIR}
 
