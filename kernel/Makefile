@@ -1,7 +1,7 @@
 include ${PDIR}/config.mk
 include deps.mk
 
-SUBDIRS	= ${shell find . -mindepth 1 -maxdepth 1 -not -empty -type d}
+SUBBDIRS	= ${shell find . -mindepth 1 -maxdepth 1 -not -empty -type d}
 #sub build dir (not used)
 #SUBBDIR	= ${PDIR}/${BUILDD}/$(notdir $(shell pwd))
 
@@ -12,9 +12,9 @@ all: ${OBJS} ${SUBBDIRS} ${SUBBDIR}
 ${PDIR}/${BUILDD}/%.o: %.c
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
-$(SUBBDIRS):
-	${MAKE} $@  PDIR=../${PDIR}
+${SUBBDIRS}: FORCE
+	${MAKE} $@ PDIR=../${PDIR}
 
 clean:
 	@rm -vf ${OBJS}
-
+FORCE:
