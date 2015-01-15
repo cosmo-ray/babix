@@ -5,5 +5,6 @@ ${ARCH}: FORCE
 FORCE:
 
 clean:
+	@rm -fv *.o
 	${MAKE} ${ARCH} clean PDIR=../${PDIR}
 
