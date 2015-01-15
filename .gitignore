@@ -1,0 +1,9 @@
+config.mk
+#*
+*~
+*.o
+*.obj
+*.so
+*.a
+*.out
+babix

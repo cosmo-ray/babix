@@ -1,25 +1,9 @@
 /* Clear the screen and initialize VIDEO, XPOS and YPOS. */
 
 #include <stdint.h>
+
 #include "fbprint.h"
-
-static int xpos;
-static int ypos;
-static volatile unsigned char *video;
-
-void     cls (void)
-{
-  int i;
-  
-  video = (unsigned char *) VIDEO;
-       
-  for (i = 0; i < COLUMNS * LINES * 2; i++)
-    *(video + i) = 0;
-     
-  xpos = 0;
-  ypos = 0;
-}
-     
+#include "vga.h"     
 /* Convert the integer D to a string and save the string in BUF. If
    BASE is equal to 'd', interpret that D is decimal, and if BASE is
    equal to 'x', interpret that D is hexadecimal. */
@@ -66,25 +50,6 @@ void	itoa (char *buf, int32_t base, int32_t d)
 }
      
 /* Put the character C on the screen. */
-void      putchar (int32_t c)
-{
-  if (c == '\n' || c == '\r')
-    {
-    newline:
-      xpos = 0;
-      ypos++;
-      if (ypos >= LINES)
-	ypos = 0;
-      return;
-    }
-     
-  *(video + (xpos + ypos * COLUMNS) * 2) = c & 0xFF;
-  *(video + (xpos + ypos * COLUMNS) * 2 + 1) = ATTRIBUTE;
-     
-  xpos++;
-  if (xpos >= COLUMNS)
-    goto newline;
-}
 
 /* Format a string and print it on the screen, just like the libc
    function printf. */
@@ -122,11 +87,11 @@ void kprintf (const char *format, ...)
      
 	    string:
 	      while (*p)
-		putchar (*p++);
+		putchar(*p++);
 	      break;
      
 	    default:
-	      putchar (*((int *) arg++));
+	      putchar(*((int *) arg++));
 	      break;
 	    }
 	}
