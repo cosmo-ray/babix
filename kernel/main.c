@@ -1,6 +1,5 @@
 #if !defined(__cplusplus)
-
-#include <stdbool.h> /* C doesn't have booleans by default. */
+# include <stdbool.h> /* C doesn't have booleans by default. */
 #endif
 #include <stddef.h>
 #include <stdint.h>
@@ -28,23 +27,21 @@
 extern "C" /* Use C linkage for kernel_main. */
 #endif
 
-void kernel_main(unsigned long magic, unsigned long stacktart)
-{
-  multiboot_info_t *mbi;
+void initmem(unsigned long stackstart);
 
+void kernel_main(unsigned long magic, unsigned long stackstart)
+{
   /* Clear the screen. */
    /* Am I booted by a Multiboot-compliant boot loader? */
 
 
-  if (magic != MULTIBOOT_BOOTLOADER_MAGIC)
-    {
+  if (magic != MULTIBOOT_BOOTLOADER_MAGIC)    {
       kprintf ("Invalid magic number: 0x%x\n", (unsigned) magic);
       return;
     }
 
+  initmem(stackstart);
 
-  initmem(addr);
-  
   while (1);
   return;
 }

@@ -10,11 +10,11 @@ OBJS = $(subst .c,.o, $(addprefix ${PDIR}/${BUILDD}/, $(SRCS)))
 all: ${OBJS} ${SUBBDIRS} ${SUBBDIR}
 
 ${PDIR}/${BUILDD}/%.o: %.c
-	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
+	$(CC) $(CFLAGS) -I ${PDIR}/$(INCLUDE) -c $< -o $@
 
-$(SUBBDIRS):
-	${MAKE} $@  PDIR=../${PDIR}
+${SUBBDIRS}: FORCE
+	${MAKE} $@ PDIR=../${PDIR}
 
 clean:
 	@rm -vf ${OBJS}
-
+FORCE:

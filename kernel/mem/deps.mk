@@ -1,1 +1,1 @@
-SRCS	=
+SRCS	+= mm.c
